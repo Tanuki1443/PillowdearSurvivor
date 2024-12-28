@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://4fx7w7dwy3co"]
+
+[ext_resource type="Script" path="res://Enemy.cs" id="1_0l0n8"]
+[ext_resource type="Texture2D" uid="uid://drg3d17a0bvxb" path="res://sprites/enemy/pixil-frame-0.png" id="2_7yi0y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c7y18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7yi0y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3xxpq"]
+size = Vector2(17, 26)
+
+[node name="Enemy" type="RigidBody2D"]
+script = ExtResource("1_0l0n8")
+
+[node name="EnemySprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(44, 38)
+sprite_frames = SubResource("SpriteFrames_c7y18")
+
+[node name="enemyHitBox" type="CollisionShape2D" parent="."]
+position = Vector2(29.5, 40)
+shape = SubResource("RectangleShape2D_3xxpq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

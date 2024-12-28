@@ -1,0 +1,108 @@
+[gd_scene load_steps=11 format=3 uid="uid://n3ymd1e2etk5"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_742sy"]
+[ext_resource type="Texture2D" uid="uid://bm3lno27hjs0n" path="res://sprites/pillow/pixilart-drawing.png" id="1_fb4s3"]
+[ext_resource type="Texture2D" uid="uid://dymba4kol0b3" path="res://sprites/attacks/A200-1.png" id="3_1e7i5"]
+[ext_resource type="Texture2D" uid="uid://wed2phwpw6uo" path="res://sprites/attacks/A200-2.png" id="4_ab4nm"]
+[ext_resource type="Texture2D" uid="uid://cpu4j84p3axu7" path="res://sprites/attacks/A200-3.png" id="5_sl6pa"]
+[ext_resource type="Texture2D" uid="uid://cvkecq0kq1am3" path="res://sprites/attacks/A200-4.png" id="6_70im3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkmn5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fb4s3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fb4s3")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fb4s3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CSharpScript" id="CSharpScript_giddj"]
+script/source = "using Godot;
+using System;
+
+public partial class AnimatedSprite2d : AnimatedSprite2D
+{
+	[Export]
+	public int Speed { get; set; } = 400;
+
+	public void GetInput()
+	{
+
+		Vector2 inputDirection = Input.GetVector(\"left\", \"right\", \"up\", \"down\");
+		Velocity = inputDirection * Speed;
+	}
+	
+	public override void _Ready()
+	{
+	}
+
+	public override void _Process(double delta)
+	{
+		GetInput();
+		MoveAndSlide();
+	}
+}
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u3h42"]
+radius = 12.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eytgr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1e7i5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ab4nm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sl6pa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_70im3")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 4.0
+}]
+
+[node name="player" type="Area2D"]
+position = Vector2(17, 13)
+script = ExtResource("1_742sy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_wkmn5")
+animation = &"up"
+script = SubResource("CSharpScript_giddj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 7)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_u3h42")
+
+[node name="Attack" type="AnimatedSprite2D" parent="."]
+position = Vector2(24, -22)
+scale = Vector2(0.149414, 0.161621)
+sprite_frames = SubResource("SpriteFrames_eytgr")
+animation = &"attack"
+frame_progress = 0.104219

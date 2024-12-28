@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt1xpo0l346gu"]
+
+[ext_resource type="Script" path="res://code/Main.cs" id="1_kp2dd"]
+[ext_resource type="PackedScene" uid="uid://4fx7w7dwy3co" path="res://enemy.tscn" id="2_8fhdo"]
+
+[sub_resource type="Curve2D" id="Curve2D_hhsex"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1112, 0, 0, 0, 0, 0, 1120, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_kp2dd")
+MobScene = ExtResource("2_8fhdo")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_hhsex")
+
+[node name="Marker2D" type="Marker2D" parent="."]
